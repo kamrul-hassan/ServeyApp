@@ -1,0 +1,28 @@
+<ion-view view-title="Servey App">
+    <ion-content class="padding">
+        <h2>Servey</h2>
+        <p>{{serveyQuestions[index].Question}}</p>
+
+        <div class="list" ng-if="serveyQuestions[index].Type==='dropdown'">
+            <select ng-model="serveyQuestions[index].SelectedOption" ng-options="item.Value for item in serveyQuestions[index].Options">
+            </select>
+        </div>
+        <div class="list" ng-if="serveyQuestions[index].Type==='radio'">
+            <ion-radio ng-repeat="item in serveyQuestions[index].Options" ng-value="item.Key" ng-model="serveyQuestions[index].SelectedOption">{{item.Value}}</ion-radio>
+        </div>
+        <div class="list" ng-if="serveyQuestions[index].Type==='text'">
+            <label class="item item-input">
+                <input type="text" placeholder="Please enter your input here" ng-model="serveyQuestions[index].SelectedOption">
+            </label>
+        </div>
+        <div class="list" ng-if="serveyQuestions[index].Type==='checkbox'">
+            <ion-checkbox ng-repeat="item in serveyQuestions[index].Options" ng-model="serveyQuestions[index].SelectedOption[item.Key]"
+            ng-checked="serveyQuestions[index].SelectedOption[item.Key]">{{item.Value}}</ion-checkbox>
+        </div>
+        <div class="text-center padding">
+            <button class="button button-positive" ng-if="hasPrevious()" ng-click="decreaseIndex()">Previous</button>
+            <button class="button button-positive" ng-if="hasNext()" ng-click="increaseIndex()">Next</button>
+            <button class="button button-positive" ng-if="isLastIndex()" ng-click="save()">Save</button>
+        </div>
+    </ion-content>
+</ion-view>
