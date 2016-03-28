@@ -48,16 +48,16 @@ angular.module('starter.services', [])
     }
   };
 })
-.factory('Questions', function($http){    
+.factory('Questions', function($http,config){    
     var services = {        
-        get: function() {
-            return $http.get('http://localhost:29983/api/SurveyApp');
+        get: function() {           
+            return $http.get(`${config.serviceUrl}/SurveyApp`);
         },
         login: function(model){
-            return $http.post('http://localhost:29983/api/Login', model);
+            return $http.post(`${config.serviceUrl}/Login`, model);
         },
         save:function(model) {
-            return $http.post('http://localhost:29983/api/SurveyApp/Save', model);
+            return $http.post(`${config.serviceUrl}/SurveyApp/Save`, model);
         }
     }
     return services;  

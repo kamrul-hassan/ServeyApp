@@ -22,7 +22,9 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
     }
   });
 })
-
+.constant('config',{
+    serviceUrl : 'http://localhost:29983/api'
+})
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
