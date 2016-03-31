@@ -1,12 +1,20 @@
 ﻿using SurveyApp.Models;
+using SurveyApp.Repository;
 using System.Collections.Generic;
 using System.Web.Http;
+using System;
+using SurveyApp.Entity;
 
 namespace SurveyApp.Controllers
 {
     
     public class SurveyAppController : ApiController
     {
+        private readonly IGcmUserRepository _gcmUserRepository;
+
+        public SurveyAppController() {
+            _gcmUserRepository = new GcmUserRepository();
+        }
         [HttpGet]
         public IEnumerable<QuestionModel> Get()
         {
@@ -74,6 +82,12 @@ namespace SurveyApp.Controllers
         public bool Save(List<QuestionModel> model)
         {
             return true;
+        }
+
+        [HttpPost]
+        public GcmUserModel Subscribe(GcmUserModel user)
+        {
+            return _gcmUserRepository.Save(new GcmUser() { CreatedOn = DateTime.Now, Email = user.Email, RegistrationId = user.RegistrationId});
         }
     }
 }

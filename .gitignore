@@ -5,3 +5,6 @@ node_modules/
 platforms/
 plugins/
 /SurveyAppService/*.suo
+/SurveyAppService/SurveyApp/App_Data
+/SurveyAppService/SurveyApp/bin
+/SurveyAppService/SurveyApp/obj
