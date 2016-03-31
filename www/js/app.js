@@ -23,7 +23,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
   });
 })
 .constant('config',{
-    serviceUrl : 'http://localhost:29983/api'
+    serviceUrl : 'http://cdtsweb383zp/api'//'http://localhost:29983/api'
 })
 .config(function($stateProvider, $urlRouterProvider) {
 
