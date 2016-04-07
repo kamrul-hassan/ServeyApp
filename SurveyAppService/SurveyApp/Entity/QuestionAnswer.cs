@@ -11,7 +11,8 @@ namespace SurveyApp.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int QuestionId { get; set; }   
-        public int QuestionOptionId { get; set; }
+        public int? QuestionOptionId { get; set; }
+        public string Answer { get; set; }
         public virtual Question Question { get; set; }
         public virtual QuestionOption QuestionOption { get; set; }
     }

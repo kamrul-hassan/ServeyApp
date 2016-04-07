@@ -106,9 +106,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604070950462_AddTables.cs" />
-    <Compile Include="Migrations\201604070950462_AddTables.Designer.cs">
-      <DependentUpon>201604070950462_AddTables.cs</DependentUpon>
+    <Compile Include="Migrations\201604071022487_AddTables.cs" />
+    <Compile Include="Migrations\201604071022487_AddTables.Designer.cs">
+      <DependentUpon>201604071022487_AddTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -136,8 +136,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604070950462_AddTables.resx">
-      <DependentUpon>201604070950462_AddTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604071022487_AddTables.resx">
+      <DependentUpon>201604071022487_AddTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
