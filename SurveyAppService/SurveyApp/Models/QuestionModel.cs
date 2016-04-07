@@ -9,6 +9,7 @@ namespace SurveyApp.Models
     {
         public string Type { get; set; } 
         public string Question { get; set; }
+        public bool IsRequired { get; set; }
         public int QuestionId { get; set; }
         public dynamic SelectedOption { get; set; }
         public List<KeyValueModel> Options { get; set; } 

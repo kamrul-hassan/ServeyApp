@@ -12,6 +12,9 @@ namespace SurveyApp.Entity
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<QuestionOption> QuestionOptions { get; set; }
+        public DbSet<QuestionAnswer> QuestionAnswers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

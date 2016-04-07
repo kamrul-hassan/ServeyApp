@@ -10,10 +10,10 @@ namespace SurveyApp.Controllers
     
     public class SurveyAppController : ApiController
     {
-        private readonly IGcmUserRepository _gcmUserRepository;
+        private readonly IUserRepository _gcmUserRepository;
 
         public SurveyAppController() {
-            _gcmUserRepository = new GcmUserRepository();
+            _gcmUserRepository = new UserRepository();
         }
         [HttpGet]
         public IEnumerable<QuestionModel> Get()
@@ -85,7 +85,7 @@ namespace SurveyApp.Controllers
         }
 
         [HttpPost]
-        public GcmUserModel Subscribe(GcmUserModel user)
+        public UserModel Subscribe(UserModel user)
         {
             return _gcmUserRepository.Save(new User() { CreatedOn = DateTime.Now, Email = user.Email, RegistrationId = user.RegistrationId});
         }

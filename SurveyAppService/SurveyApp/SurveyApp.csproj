@@ -106,18 +106,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603310600578_AddTables.cs" />
-    <Compile Include="Migrations\201603310600578_AddTables.Designer.cs">
-      <DependentUpon>201603310600578_AddTables.cs</DependentUpon>
+    <Compile Include="Migrations\201604070950462_AddTables.cs" />
+    <Compile Include="Migrations\201604070950462_AddTables.Designer.cs">
+      <DependentUpon>201604070950462_AddTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\GcmUserModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\KeyValueModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\GcmUserRepository.cs" />
-    <Compile Include="Repository\IGcmUserRepository.cs" />
+    <Compile Include="Repository\ISurveyQuestionRepository.cs" />
+    <Compile Include="Repository\SurveyQuestionRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\IUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -134,8 +136,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603310600578_AddTables.resx">
-      <DependentUpon>201603310600578_AddTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604070950462_AddTables.resx">
+      <DependentUpon>201604070950462_AddTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
