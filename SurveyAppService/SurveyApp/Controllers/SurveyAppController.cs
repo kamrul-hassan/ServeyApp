@@ -87,7 +87,7 @@ namespace SurveyApp.Controllers
         [HttpPost]
         public GcmUserModel Subscribe(GcmUserModel user)
         {
-            return _gcmUserRepository.Save(new GcmUser() { CreatedOn = DateTime.Now, Email = user.Email, RegistrationId = user.RegistrationId});
+            return _gcmUserRepository.Save(new User() { CreatedOn = DateTime.Now, Email = user.Email, RegistrationId = user.RegistrationId});
         }
     }
 }

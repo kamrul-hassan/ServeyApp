@@ -6,7 +6,7 @@ namespace SurveyApp.Repository
 {
     public interface IGcmUserRepository
     {
-        GcmUserModel Save(GcmUser user);
+        GcmUserModel Save(User user);
         List<GcmUserModel> GetGcmUsers();
     }
 }

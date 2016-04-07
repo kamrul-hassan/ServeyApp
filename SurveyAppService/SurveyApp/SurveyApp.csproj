@@ -99,7 +99,10 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SurveyAppController.cs" />
     <Compile Include="Entity\AppDbContext.cs" />
-    <Compile Include="Entity\GcmUser.cs" />
+    <Compile Include="Entity\User.cs" />
+    <Compile Include="Entity\QuestionAnswer.cs" />
+    <Compile Include="Entity\QuestionOption.cs" />
+    <Compile Include="Entity\Question.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -18,7 +18,7 @@ namespace SurveyApp.Repository
             }
         }
 
-        public GcmUserModel Save(GcmUser user)
+        public GcmUserModel Save(User user)
         {
             using (_dbContext = new AppDbContext())
             {

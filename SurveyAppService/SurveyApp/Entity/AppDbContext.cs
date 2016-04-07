@@ -11,7 +11,7 @@ namespace SurveyApp.Entity
         public AppDbContext() : base("CONTENT") {
         }
 
-        public DbSet<GcmUser> GcmUsers { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
