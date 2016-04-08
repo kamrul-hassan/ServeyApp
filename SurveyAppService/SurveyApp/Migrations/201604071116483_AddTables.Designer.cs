@@ -13,7 +13,7 @@ namespace SurveyApp.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201604071022487_AddTables"; }
+            get { return "201604071116483_AddTables"; }
         }
         
         string IMigrationMetadata.Source

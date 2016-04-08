@@ -91,8 +91,14 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SurveyAppDB.mdf" />
+    <Content Include="App_Data\SurveyAppDB_log.ldf">
+      <DependentUpon>SurveyAppDB.mdf</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -106,9 +112,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604071022487_AddTables.cs" />
-    <Compile Include="Migrations\201604071022487_AddTables.Designer.cs">
-      <DependentUpon>201604071022487_AddTables.cs</DependentUpon>
+    <Compile Include="Migrations\201604071116483_AddTables.cs" />
+    <Compile Include="Migrations\201604071116483_AddTables.Designer.cs">
+      <DependentUpon>201604071116483_AddTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -133,11 +139,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604071022487_AddTables.resx">
-      <DependentUpon>201604071022487_AddTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604071116483_AddTables.resx">
+      <DependentUpon>201604071116483_AddTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

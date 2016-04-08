@@ -21,11 +21,11 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('HomeCtrl', function($scope, $cordovaNetwork, $cordovaSQLite, Questions) {
+    .controller('HomeCtrl', function($scope, $rootScope,$cordovaNetwork, $cordovaSQLite, Questions) {
         //console.log($cordovaNetwork.isOnline());
-        $scope.index = 0; $scope.serveyQuestions = [];
+        $scope.index = 0; $rootScope.serveyQuestions = [];
         Questions.get().then(res => {
-            $scope.serveyQuestions = res.data;
+            $rootScope.serveyQuestions = res.data;
             /*var db = $cordovaSQLite.openDB({ name: "servey.db" });
             var db = $cordovaSQLite.openDB({ name: "servey.db", bgType: 1 });
             for (var i = 0; i < $scope.serveyQuestions.length; i++) {
@@ -49,11 +49,11 @@ angular.module('starter.controllers', [])
             $scope.index = $scope.index - 1;
         }
         $scope.isLastIndex = function() {
-            if ($scope.serveyQuestions.length - 1 == $scope.index) return true;
+            if ($rootScope.serveyQuestions.length - 1 == $scope.index) return true;
             return false;
         }
         $scope.hasNext = function() {
-            if ($scope.serveyQuestions.length - 1 == $scope.index) return false;
+            if ($rootScope.serveyQuestions.length - 1 == $scope.index) return false;
             return $scope.serveyQuestions.length > $scope.index;
         }
         $scope.hasPrevious = function() {
@@ -67,13 +67,14 @@ angular.module('starter.controllers', [])
                 var id = $scope.serveyQuestions[i].QuestionId;
                 
             }*/
-            Questions.save($scope.serveyQuestions).then(res => {
+            Questions.save($rootScope.serveyQuestions).then(res => {
                 console.log(res.data);
             })
         }
     })   
 
-    .controller('SettingCtrl', function($scope) {
+    .controller('SettingCtrl', function($scope, $rootScope) {
+        console.log($rootScope.serveyQuestions);
         $scope.settings = {
             enableFriends: true
         };
