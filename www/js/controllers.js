@@ -21,26 +21,20 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('HomeCtrl', function($scope, $rootScope,$cordovaNetwork, $cordovaSQLite, Questions) {
+    .controller('HomeCtrl', function($scope, $rootScope, $state, $ionicPopup, Questions) {
         //console.log($cordovaNetwork.isOnline());
-        $scope.index = 0; $rootScope.serveyQuestions = [];
-        Questions.get().then(res => {
-            $rootScope.serveyQuestions = res.data;
-            /*var db = $cordovaSQLite.openDB({ name: "servey.db" });
-            var db = $cordovaSQLite.openDB({ name: "servey.db", bgType: 1 });
-            for (var i = 0; i < $scope.serveyQuestions.length; i++) {
-                var id = $scope.serveyQuestions[i].QuestionId;
-                var type = $scope.serveyQuestions[i].Type;
-                var question = $scope.serveyQuestions[i].Question;                
-                var query = `INSERT INTO questions (question_id, question_type, question) VALUES (${id},${type},${question})`;
-                $cordovaSQLite.execute(db, query, ["test", 100]).then(function(res) {
-                    console.log("insertId: " + res.insertId);
-                }, function(err) {
-                    console.error(err);
-                });
-            }*/
-
-        });
+        if (!$rootScope.serveyQuestions) {
+            var myPopup = $ionicPopup.alert({
+                title: 'Survey Download',
+                template: 'Please download your servey!'
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+                $state.go('tab.setting');
+            });
+            return;
+        }
+        $scope.index = 0;
         $scope.increaseIndex = function() {
             $scope.index = $scope.index + 1;
 
@@ -71,11 +65,14 @@ angular.module('starter.controllers', [])
                 console.log(res.data);
             })
         }
-    })   
+    })
 
-    .controller('SettingCtrl', function($scope, $rootScope) {
+    .controller('SettingCtrl', function($scope, $rootScope, $state, Questions) {
         console.log($rootScope.serveyQuestions);
-        $scope.settings = {
-            enableFriends: true
+        $scope.downloadSurvey = function() {
+            Questions.get().then(res => {
+                $rootScope.serveyQuestions = res.data;
+                $state.go('tab.home');
+            });
         };
     });

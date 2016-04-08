@@ -1,9 +1,8 @@
 <ion-view view-title="Settings">
-  <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
-  </ion-content>
+    <ion-content padding="true" class="ionic">
+        <button ng-click="downloadSurvey()" class="button button-block button-stable">
+            Download Survey
+        </button>
+        <button class="button button-block button-dark">Submit Survey</button>
+    </ion-content>
 </ion-view>
