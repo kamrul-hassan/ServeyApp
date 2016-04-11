@@ -89,5 +89,11 @@ namespace SurveyApp.Controllers
         {
             return _gcmUserRepository.Save(new User() { CreatedOn = DateTime.Now, Email = user.Email, RegistrationId = user.RegistrationId});
         }
+
+        [HttpPost]
+        public bool register(string deviceToken)
+        {
+            return true;
+        }
     }
 }

@@ -112,6 +112,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\LogWriter.cs" />
     <Compile Include="Migrations\201604071116483_AddTables.cs" />
     <Compile Include="Migrations\201604071116483_AddTables.Designer.cs">
       <DependentUpon>201604071116483_AddTables.cs</DependentUpon>
