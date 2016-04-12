@@ -1,5 +1,4 @@
-﻿using SurveyApp.Helper;
-using SurveyApp.Models;
+﻿using SurveyApp.Models;
 using SurveyApp.Repository;
 using System.Web.Http;
 
@@ -16,11 +15,11 @@ namespace SurveyApp.Controllers
 
         [HttpPost]
         public UserModel Index(UserModel model)
-        {
-            new LogWriter("Email: " + model.Email + " Password: " + model.Password);
+        {            
             if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Password))
             {
-                return _userRepository.GetUser(model.Email, model.Password);                
+                return new UserModel(){ Email = model.Email, Id = 1};
+                //return _userRepository.GetUser(model.Email, model.Password);                
             }
             return null;
         }

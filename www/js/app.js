@@ -53,6 +53,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
 
   .state('tab.home', {
     url: '/home',
+    cache: false,
     views: {
       'tab-home': {
         templateUrl: 'templates/tab-home.html',

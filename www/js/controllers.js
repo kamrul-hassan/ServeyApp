@@ -1,18 +1,18 @@
 angular.module('starter.controllers', [])
 
-    .controller('LoginCtrl', function($scope, $state, $ionicPopup, Questions) {
+    .controller('LoginCtrl', function($scope, $state, $ionicPopup, Login) {
         var currentUser = localStorage.getItem("CurrentUser");
         if (currentUser) {
             $state.go('tab.home');
         }
         $scope.login = function(user) {
-            Questions.login(user).then(res => {
+            Login.login(user).then(res => {
                 if (res.data) {
                     localStorage.setItem("CurrentUser", JSON.stringify(res.data));
                     $state.go('tab.home');
                 }
                 else {
-                    var alertPopup = $ionicPopup.alert({
+                    $ionicPopup.alert({
                         title: 'Login failed!',
                         template: 'Please check your credentials!'
                     });
@@ -21,57 +21,56 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('HomeCtrl', function($scope, $rootScope, $state, $ionicPopup, Questions) {
+    .controller('HomeCtrl', function($scope, $state, $ionicPopup, Questions) {
         //console.log($cordovaNetwork.isOnline());
-        if (!$rootScope.serveyQuestions) {
+        
+        var retrievedData = localStorage.getItem('Questions');
+        $scope.serveyQuestions = JSON.parse(retrievedData);
+        if (!$scope.serveyQuestions) {
             var myPopup = $ionicPopup.alert({
                 title: 'Survey Download',
                 template: 'Please download your servey!'
             });
             myPopup.then(function(res) {
-                console.log('Tapped!', res);
                 $state.go('tab.setting');
             });
-            return;
         }
-        $scope.index = 0;
-        $scope.increaseIndex = function() {
-            $scope.index = $scope.index + 1;
+        else {
+            $scope.index = 0;
+            $scope.increaseIndex = function() {
+                $scope.index = $scope.index + 1;
 
+            }
+            $scope.decreaseIndex = function() {
+                $scope.index = $scope.index - 1;
+            }
+            $scope.isLastIndex = function() {
+                if ($scope.serveyQuestions.length - 1 == $scope.index) return true;
+                return false;
+            }
+            $scope.hasNext = function() {
+                if ($scope.serveyQuestions.length - 1 == $scope.index) return false;
+                return $scope.serveyQuestions.length > $scope.index;
+            }
+            $scope.hasPrevious = function() {
+                if ($scope.index == 0) return false;
+                return true;
+            }
+            $scope.save = function() {
+                Questions.save($scope.serveyQuestions).then(res => {
+                    console.log(res.data);
+                })
+            }
         }
-        $scope.decreaseIndex = function() {
-            $scope.index = $scope.index - 1;
-        }
-        $scope.isLastIndex = function() {
-            if ($rootScope.serveyQuestions.length - 1 == $scope.index) return true;
-            return false;
-        }
-        $scope.hasNext = function() {
-            if ($rootScope.serveyQuestions.length - 1 == $scope.index) return false;
-            return $scope.serveyQuestions.length > $scope.index;
-        }
-        $scope.hasPrevious = function() {
-            if ($scope.index == 0) return false;
-            return true;
-        }
-        $scope.save = function() {
-            /*var model = [];
-            for(var i=0; i < $scope.serveyQuestions.length; i++)
-            {
-                var id = $scope.serveyQuestions[i].QuestionId;
-                
-            }*/
-            Questions.save($rootScope.serveyQuestions).then(res => {
-                console.log(res.data);
-            })
-        }
+
     })
 
-    .controller('SettingCtrl', function($scope, $rootScope, $state, Questions) {
-        console.log($rootScope.serveyQuestions);
+    .controller('SettingCtrl', function($scope, $state, Questions) {
         $scope.downloadSurvey = function() {
             Questions.get().then(res => {
-                $rootScope.serveyQuestions = res.data;
+                localStorage.setItem('Questions', JSON.stringify(res.data))
+                //$rootScope.serveyQuestions = res.data;
+                
                 $state.go('tab.home');
             });
         };

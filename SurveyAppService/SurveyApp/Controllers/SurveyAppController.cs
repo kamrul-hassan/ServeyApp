@@ -93,6 +93,7 @@ namespace SurveyApp.Controllers
         [HttpPost]
         public bool register(string deviceToken)
         {
+            LogWriter.LogWrite("Device Token: " + deviceToken);
             return true;
         }
     }

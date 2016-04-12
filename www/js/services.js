@@ -48,6 +48,13 @@ angular.module('starter.services', [])
     }
   };
 })
+.factory('Login', function($http,config){  
+    return {
+        login: function(model) {
+            return $http.post(`${config.serviceUrl}/Login`, model);
+        }
+    }
+})
 .factory('Questions', function($http,config){    
     var services = {        
         get: function() {           
