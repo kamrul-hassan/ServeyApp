@@ -1,8 +1,6 @@
 <ion-view view-title="Servey App">
-    <ion-content class="padding">
-        <h2>Servey</h2>
-        <p>{{serveyQuestions[index].Question}}</p>
-
+    <ion-content class="padding top-padding">
+        <h4>{{serveyQuestions[index].Question}}</h4>       
         <div class="list" ng-if="serveyQuestions[index].Type==='dropdown'">
             <select ng-model="serveyQuestions[index].SelectedOption" ng-options="item.Value for item in serveyQuestions[index].Options">
             </select>
