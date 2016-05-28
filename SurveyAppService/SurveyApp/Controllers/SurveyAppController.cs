@@ -112,7 +112,7 @@ namespace SurveyApp.Controllers
         }
 
         [HttpGet]
-        public List<SurveyType> GetSurveyTypes(string userName)
+        public List<SurveyType> GetSurveyTypes()
         {
             return new List<SurveyType>()
             {

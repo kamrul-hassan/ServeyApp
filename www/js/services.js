@@ -24,6 +24,9 @@ angular.module('starter.services', [])
         },
         save:function(model) {
             return $http.post(`${config.serviceUrl}/SurveyApp/Save`, model);
+        },
+        getSureveyType: function() {           
+            return $http.get(`${config.serviceUrl}/SurveyApp/GetSurveyTypes`);
         }
     }
     return services;  

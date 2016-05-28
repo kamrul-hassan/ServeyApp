@@ -5,8 +5,8 @@ angular.module('starter.controllers', [])
         if (currentUser) {
             $state.go('tab.home');
         }
-        $scope.login = function(user) {
-            Login.login(user).then(res => {
+        $scope.login = function(userID) {
+            Login.login(userID).then(res => {
                 if (res.data) {
                     localStorage.setItem("CurrentUser", JSON.stringify(res.data));
                     $state.go('tab.home');
@@ -23,7 +23,11 @@ angular.module('starter.controllers', [])
 
     .controller('HomeCtrl', function($scope, $state, $ionicPopup, Questions) {
         //console.log($cordovaNetwork.isOnline());
-         $scope.showSaveButton = false;
+        var currentUser = localStorage.getItem("CurrentUser");
+        if(currentUser == null) {
+            $state.go('tab.login')
+        }
+        $scope.showSaveButton = false;
         var retrievedData = localStorage.getItem('Questions');
         $scope.serveyQuestions = JSON.parse(retrievedData);
         if (!$scope.serveyQuestions) {
@@ -66,8 +70,12 @@ angular.module('starter.controllers', [])
 
     })
     
-    .controller('LsitCtrl', function($scope, $state, $ionicPopup, SurveyList) {
-         $scope.isServer = { checked: false };
+    .controller('ListCtrl', function($scope, $state, $ionicPopup, SurveyList) {
+        var currentUser = localStorage.getItem("CurrentUser");
+        if(currentUser == null) {
+            $state.go('tab.login')
+        }
+        $scope.isServer = { checked: false };
         $scope.isServerChange = function() {
             if($scope.isServer.checked)
             {
@@ -84,18 +92,23 @@ angular.module('starter.controllers', [])
         } 
     })
     .controller('DownloadCtrl', function ($scope, $state, $ionicPopup, Questions) {
-        $scope.items = ['Anurag', 'Kamrul', 'Arnab'];
+        var currentUser = localStorage.getItem("CurrentUser");
+        if(currentUser == null) {
+            $state.go('tab.login')
+        }
+        Questions.getSureveyType().then(res => {
+            $scope.items = res.data;
+            localStorage.setItem('SureveyType', JSON.stringify(res.data))                        
+        });
         $scope.addToPlaylist = function (data) {
             $ionicPopup.confirm({
-                title: 'Do You Want to Download' + data,
+                title: 'Do You Want to Download  ' + data.Name,
                 template: 'Please check your credentials!',
                 okText: "Download"
             }).then(function (res) {
                 if (res) {
                     Questions.get().then(res => {
-                        localStorage.setItem('Questions', JSON.stringify(res.data))
-                        //$rootScope.serveyQuestions = res.data;
-                    
+                        localStorage.setItem('Questions', JSON.stringify(res.data))                        
                         $state.go('tab.home');
                     });
                 }
@@ -105,6 +118,17 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('SyncCtrl', function ($scope, $state) {
+    .controller('SyncCtrl', function ($scope, $state, $ionicPopup) {
+        $scope.logOut = function(){
+            $ionicPopup.confirm({
+                title: 'Do You Want to Kill',
+                template: '',
+                okText: "Kill"
+            }).then(function (res) {
+                if (res) {
+                   localStorage.removeItem('CurrentUser');
+                }
 
+            });
+        }
     });

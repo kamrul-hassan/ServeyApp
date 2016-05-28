@@ -67,7 +67,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
     views: {
       'tab-list': {
         templateUrl: 'templates/list.html',
-        controller: 'LsitCtrl'
+        controller: 'ListCtrl'
       }
     }
   })

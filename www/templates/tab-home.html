@@ -17,13 +17,13 @@
         </div>
         <div class="list" ng-if="serveyQuestions[index].Type==='checkbox'">
             <ion-checkbox ng-repeat="item in serveyQuestions[index].Options" ng-model="serveyQuestions[index].SelectedOption[item.Key]"
-            ng-checked="serveyQuestions[index].SelectedOption[item.Key]">{{item.Value}}</ion-checkbox>
+                ng-checked="serveyQuestions[index].SelectedOption[item.Key]">{{item.Value}}</ion-checkbox>
         </div>
         <div class="text-center padding">
             <button class="button button-positive" ng-if="hasPrevious()" ng-click="decreaseIndex()">Previous</button>
-             <button class="button button-positive" ng-if="hasNext()" ng-disabled="serveyQuestions[index].SelectedOption == null" ng-click="increaseIndex()">Next</button>
+            <button class="button button-positive" ng-if="hasNext()" ng-disabled="serveyQuestions[index].SelectedOption == null" ng-click="increaseIndex()">Next</button>
             <button class="button button-positive" ng-if="showSaveButton || isLastIndex()" ng-click="save()">Save</button>
-        
+
         </div>
     </ion-content>
 </ion-view>
