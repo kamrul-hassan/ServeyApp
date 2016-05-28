@@ -23,7 +23,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
   });
 })
 .constant('config',{
-    serviceUrl : 'https://primaryintelligence.imshealth.com/surveyservice/api'//'http://localhost:29983/api'
+    serviceUrl : 'http://localhost:29983/api' //'https://primaryintelligence.imshealth.com/surveyservice/api'
 })
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -58,6 +58,16 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
       'tab-home': {
         templateUrl: 'templates/tab-home.html',
         controller: 'HomeCtrl'
+      }
+    }
+  })
+  .state('tab.list', {
+    url: '/list',
+    cache: false,
+    views: {
+      'tab-list': {
+        templateUrl: 'templates/list.html',
+        controller: 'LsitCtrl'
       }
     }
   })

@@ -64,7 +64,24 @@ angular.module('starter.controllers', [])
         }
 
     })
-
+    
+    .controller('LsitCtrl', function($scope, $state, $ionicPopup, SurveyList) {
+         $scope.isServer = { checked: false };
+        $scope.isServerChange = function() {
+            if($scope.isServer.checked)
+            {
+                SurveyList.get().then(res => {
+                    $scope.surveyList = res.data;
+                });
+            }
+            else{
+                $scope.surveyList = [];
+            }            
+        }; 
+        $scope.editSurvey = function (id) {
+            console.log(id);
+        } 
+    })
     .controller('SettingCtrl', function($scope, $state, Questions) {
         $scope.downloadSurvey = function() {
             Questions.get().then(res => {

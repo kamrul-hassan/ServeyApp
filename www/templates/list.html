@@ -1,0 +1,28 @@
+<ion-view view-title="Survey List">
+    <ion-content padding="true" class="ionic">        
+        <ion-toggle ng-model="isServer.checked" ng-change="isServerChange()">Server</ion-toggle>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Status</th>
+                        <th>Location</th>   
+                        <th>Action</th>               
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in surveyList">
+                        <td>{{ item.Id }}</td>
+                        <td>{{ item.Status }}</td>
+                        <td>{{ item.Location }}</td>
+                        <td><button ng-click="editSurvey(item.Id)" class="button {{item.IsSynchronized ? 'disabled' : 'false'}}">Edit</button></td>
+                    </tr>
+                    <tr ng-if="!(surveyList && surveyList.length > 0)">
+                        <td colspan="4">No record found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

@@ -96,5 +96,19 @@ namespace SurveyApp.Controllers
             LogWriter.LogWrite("Device Token: " + deviceToken);
             return true;
         }
+        [HttpGet]
+        public List<SurveyState> GetSurveyList()
+        {
+            return new List<SurveyState>()
+            {
+                new SurveyState() {Id = 1, Status = "Completed", Location = "Server", IsSynchronized = true},
+                new SurveyState() {Id = 2, Status = "Completed", Location = "Server", IsSynchronized = true},
+                new SurveyState() {Id = 3, Status = "Completed", Location = "Local", IsSynchronized = false},
+                new SurveyState() {Id = 4, Status = "Completed", Location = "Server", IsSynchronized = true},
+                new SurveyState() {Id = 5, Status = "Completed", Location = "Local", IsSynchronized = false},
+                new SurveyState() {Id = 6, Status = "Completed", Location = "Server", IsSynchronized = true}
+
+            };
+        }
     }
 }
