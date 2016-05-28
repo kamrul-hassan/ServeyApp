@@ -21,8 +21,9 @@
         </div>
         <div class="text-center padding">
             <button class="button button-positive" ng-if="hasPrevious()" ng-click="decreaseIndex()">Previous</button>
-            <button class="button button-positive" ng-if="hasNext()" ng-click="increaseIndex()">Next</button>
-            <button class="button button-positive" ng-if="isLastIndex()" ng-click="save()">Save</button>
+             <button class="button button-positive" ng-if="hasNext()" ng-disabled="serveyQuestions[index].SelectedOption == null" ng-click="increaseIndex()">Next</button>
+            <button class="button button-positive" ng-if="showSaveButton || isLastIndex()" ng-click="save()">Save</button>
+        
         </div>
     </ion-content>
 </ion-view>
