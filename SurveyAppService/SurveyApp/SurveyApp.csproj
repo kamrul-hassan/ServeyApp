@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SurveyState.cs" />
+    <Compile Include="Models\SurveyType.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\KeyValueModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
