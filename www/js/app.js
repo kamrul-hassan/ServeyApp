@@ -73,6 +73,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
   })
   .state('tab.download', {
     url: '/download',
+    ache: false,
     views: {
       'tab-download': {
         templateUrl: 'templates/tab-download.html',

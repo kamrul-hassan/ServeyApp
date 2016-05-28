@@ -32,7 +32,7 @@ angular.module('starter.controllers', [])
                 template: 'Please download your servey!'
             });
             myPopup.then(function(res) {
-                $state.go('tab.setting');
+                $state.go('tab.download');
             });
         }
         else {
