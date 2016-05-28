@@ -110,5 +110,20 @@ namespace SurveyApp.Controllers
 
             };
         }
+
+        [HttpGet]
+        public List<SurveyType> GetSurveyTypes()
+        {
+            return new List<SurveyType>()
+            {
+                new SurveyType() {Id = 1, Name = "Survey Name 1", Limit = 100 },
+                new SurveyType() {Id = 2, Name = "Survey Name 2", Limit = 80},
+                new SurveyType() {Id = 3, Name = "Survey Name 3", Limit = 100 },
+                new SurveyType() {Id = 4, Name = "Survey Name 4", Limit = 70 },
+                new SurveyType() {Id = 5, Name = "Survey Name 5", Limit = 100 },
+                new SurveyType() {Id = 6, Name = "Survey Name 6", Limit = 10 }
+
+            };
+        }
     }
 }
