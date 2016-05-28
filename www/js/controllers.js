@@ -1,5 +1,19 @@
 angular.module('starter.controllers', [])
+    .run(function($rootScope, $ionicPopup, $state) {
+        $rootScope.logOut = function(){
+            $ionicPopup.confirm({
+                title: 'Do You Want to Kill',
+                template: '',
+                okText: "Kill"
+            }).then(function (res) {
+                if (res) {
+                   localStorage.removeItem('CurrentUser');
+                   $state.go('login');
+                }
 
+            });
+        }
+    })
     .controller('LoginCtrl', function($scope, $state, $ionicPopup, Login) {
         var currentUser = localStorage.getItem("CurrentUser");
         if (currentUser) {
@@ -25,7 +39,7 @@ angular.module('starter.controllers', [])
         //console.log($cordovaNetwork.isOnline());
         var currentUser = localStorage.getItem("CurrentUser");
         if(currentUser == null) {
-            $state.go('tab.login')
+            $state.go('login');
         }
         $scope.showSaveButton = false;
         var retrievedData = localStorage.getItem('Questions');
@@ -73,7 +87,7 @@ angular.module('starter.controllers', [])
     .controller('ListCtrl', function($scope, $state, $ionicPopup, SurveyList) {
         var currentUser = localStorage.getItem("CurrentUser");
         if(currentUser == null) {
-            $state.go('tab.login')
+            $state.go('login')
         }
         $scope.isServer = { checked: false };
         $scope.isServerChange = function() {
@@ -94,7 +108,7 @@ angular.module('starter.controllers', [])
     .controller('DownloadCtrl', function ($scope, $state, $ionicPopup, Questions) {
         var currentUser = localStorage.getItem("CurrentUser");
         if(currentUser == null) {
-            $state.go('tab.login')
+            $state.go('login')
         }
         Questions.getSureveyType().then(res => {
             $scope.items = res.data;
@@ -119,16 +133,5 @@ angular.module('starter.controllers', [])
     })
 
     .controller('SyncCtrl', function ($scope, $state, $ionicPopup) {
-        $scope.logOut = function(){
-            $ionicPopup.confirm({
-                title: 'Do You Want to Kill',
-                template: '',
-                okText: "Kill"
-            }).then(function (res) {
-                if (res) {
-                   localStorage.removeItem('CurrentUser');
-                }
-
-            });
-        }
+        
     });
