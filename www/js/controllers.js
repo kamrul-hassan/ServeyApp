@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
 
     .controller('HomeCtrl', function($scope, $state, $ionicPopup, Questions) {
         //console.log($cordovaNetwork.isOnline());
-        
+         $scope.showSaveButton = false;
         var retrievedData = localStorage.getItem('Questions');
         $scope.serveyQuestions = JSON.parse(retrievedData);
         if (!$scope.serveyQuestions) {
@@ -39,10 +39,11 @@ angular.module('starter.controllers', [])
             $scope.index = 0;
             $scope.increaseIndex = function() {
                 $scope.index = $scope.index + 1;
-
+                $scope.showSaveButton = true;
             }
             $scope.decreaseIndex = function() {
                 $scope.index = $scope.index - 1;
+                 if( $scope.index <= 0) $scope.showSaveButton = false;
             }
             $scope.isLastIndex = function() {
                 if ($scope.serveyQuestions.length - 1 == $scope.index) return true;
