@@ -82,13 +82,28 @@ angular.module('starter.controllers', [])
             console.log(id);
         } 
     })
-    .controller('SettingCtrl', function($scope, $state, Questions) {
-        $scope.downloadSurvey = function() {
-            Questions.get().then(res => {
-                localStorage.setItem('Questions', JSON.stringify(res.data))
-                //$rootScope.serveyQuestions = res.data;
-                
-                $state.go('tab.home');
+    .controller('DownloadCtrl', function ($scope, $state, $ionicPopup, Questions) {
+        $scope.items = ['Anurag', 'Kamrul', 'Arnab'];
+        $scope.addToPlaylist = function (data) {
+            $ionicPopup.confirm({
+                title: 'Do You Want to Download' + data,
+                template: 'Please check your credentials!',
+                okText: "Download"
+            }).then(function (res) {
+                if (res) {
+                    Questions.get().then(res => {
+                        localStorage.setItem('Questions', JSON.stringify(res.data))
+                        //$rootScope.serveyQuestions = res.data;
+                    
+                        $state.go('tab.home');
+                    });
+                }
+
             });
         };
+
+    })
+
+    .controller('SyncCtrl', function ($scope, $state) {
+
     });

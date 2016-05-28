@@ -71,14 +71,25 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
       }
     }
   })
-  .state('tab.setting', {
-    url: '/setting',
+  .state('tab.download', {
+    url: '/download',
     views: {
-      'tab-setting': {
-        templateUrl: 'templates/tab-setting.html',
-        controller: 'SettingCtrl'
+      'tab-download': {
+        templateUrl: 'templates/tab-download.html',
+        controller: 'DownloadCtrl'
       }
     }
+    
+  })
+  .state('tab.sync', {
+    url: '/sync',
+    views: {
+      'tab-sync': {
+        templateUrl: 'templates/tab-sync.html',
+        controller: 'SyncCtrl'
+      }
+    }
+    
   });
 
   // if none of the above states are matched, use this as the fallback
