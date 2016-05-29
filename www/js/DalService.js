@@ -14,6 +14,7 @@ angular.module('starter.DalServices', [])
 
           db.transaction(function (tx) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS Questions (Question text)");
+            tx.executeSql("CREATE TABLE IF NOT EXISTS Servey (ServeyId INTEGER PRIMARY KEY AUTOINCREMENT, Servey text)");
           });
 
         } catch (error) {
@@ -42,6 +43,35 @@ angular.module('starter.DalServices', [])
                 questionList = res.rows.item(0).Question;
               }
               return questionList;
+            }
+          );
+      },
+      getServeyById: function(id){
+        var question=null;
+        var query = "Select * from Servey Where ServeyId=?";
+
+        return $cordovaSQLite.execute(db, query, [id])
+          .then(function(res) {
+
+              if (res.rows.length > 0) {
+                question = res.rows.item(0).Servey;
+              }
+              return question;
+            }
+          );
+      },
+      getServeyList: function(){
+        var ServeyList=[];
+
+        return $cordovaSQLite.execute(db, 'Select * from Servey')
+          .then(function(res) {
+
+              if (res.rows.length > 0) {
+                for(var i = 0; i < res.rows.length; i++) {
+                  ServeyList.push(res.rows.item(i).Servey);
+                }
+              }
+              return ServeyList;
             }
           );
       }

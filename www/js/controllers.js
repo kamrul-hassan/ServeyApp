@@ -17,13 +17,13 @@ angular.module('starter.controllers', [])
     .controller('LoginCtrl', function($scope, $state, $ionicPopup, Login) {
         var currentUser = localStorage.getItem("CurrentUser");
         if (currentUser) {
-            $state.go('tab.download');
+            $state.go('tab.home');
         }
         $scope.login = function(userID) {
             Login.login(userID).then(res => {
                 if (res.data) {
                     localStorage.setItem("CurrentUser", JSON.stringify(res.data));
-                    $state.go('tab.download');
+                    $state.go('tab.home');
                 }
                 else {
                     $ionicPopup.alert({
@@ -35,8 +35,13 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('HomeCtrl', function($scope, $state, $ionicPopup, Questions) {
+    .controller('HomeCtrl', function($scope, $state, $ionicPopup, Questions, DAL) {
         //console.log($cordovaNetwork.isOnline());
+      DAL.getQuestion().then(function(res){
+
+      }
+      );
+
         var currentUser = localStorage.getItem("CurrentUser");
         if(currentUser == null) {
             $state.go('login');
@@ -83,7 +88,7 @@ angular.module('starter.controllers', [])
         }
 
     })
-    
+
     .controller('ListCtrl', function($scope, $state, $ionicPopup, SurveyList) {
         var currentUser = localStorage.getItem("CurrentUser");
         if(currentUser == null) {
@@ -99,20 +104,20 @@ angular.module('starter.controllers', [])
             }
             else{
                 $scope.surveyList = [];
-            }            
-        }; 
+            }
+        };
         $scope.editSurvey = function (id) {
             console.log(id);
-        } 
+        }
     })
-    .controller('DownloadCtrl', function ($scope, $state, $ionicPopup, Questions) {
+    .controller('DownloadCtrl', function ($scope, $state, $ionicPopup, Questions, DAL) {
         var currentUser = localStorage.getItem("CurrentUser");
         if(currentUser == null) {
             $state.go('login')
         }
         Questions.getSureveyType().then(res => {
             $scope.items = res.data;
-            localStorage.setItem('SureveyType', JSON.stringify(res.data))                        
+            localStorage.setItem('SureveyType', JSON.stringify(res.data))
         });
         $scope.addToPlaylist = function (data) {
             $ionicPopup.confirm({
@@ -121,8 +126,9 @@ angular.module('starter.controllers', [])
                 okText: "Download"
             }).then(function (res) {
                 if (res) {
-                    Questions.get(data.Id).then(res => {
-                        localStorage.setItem('Questions', JSON.stringify(res.data))                        
+                    Questions.get().then(res => {
+                        localStorage.setItem('Questions', JSON.stringify(res.data));
+                        DAL.saveQuestion(res);
                         $state.go('tab.home');
                     });
                 }
@@ -133,5 +139,5 @@ angular.module('starter.controllers', [])
     })
 
     .controller('SyncCtrl', function ($scope, $state, $ionicPopup) {
-        
+
     });

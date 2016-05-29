@@ -5,12 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.services'])
+var db;
+angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.services', 'starter.DalServices'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, DAL) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
+     DAL.prepareDB();
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
@@ -80,7 +82,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
         controller: 'DownloadCtrl'
       }
     }
-    
+
   })
   .state('tab.sync', {
     url: '/sync',
@@ -90,7 +92,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
         controller: 'SyncCtrl'
       }
     }
-    
+
   });
 
   // if none of the above states are matched, use this as the fallback
