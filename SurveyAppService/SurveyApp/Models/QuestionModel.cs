@@ -9,6 +9,7 @@ namespace SurveyApp.Models
     {
         public string Type { get; set; } 
         public int TypeId { get; set; }
+        public int SurveyId { get; set; }
         public string Question { get; set; }
         public bool IsRequired { get; set; }
         public int QuestionId { get; set; }

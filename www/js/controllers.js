@@ -62,14 +62,19 @@ angular.module('starter.controllers', [])
             $scope.index = 0;
             $scope.increaseIndex = function() {
                 $scope.index = $scope.index + 1;
-                $scope.showSaveButton = true;
+            }
+            $scope.completeIndex = function() {
+                $scope.index = $scope.index + 1;
+                $state.go('tab.list');
             }
             $scope.decreaseIndex = function() {
                 $scope.index = $scope.index - 1;
                  if( $scope.index <= 0) $scope.showSaveButton = false;
             }
             $scope.isLastIndex = function() {
-                if ($scope.serveyQuestions.length - 1 == $scope.index) return true;
+                if ($scope.serveyQuestions.length - 1 == $scope.index){
+                    return true;
+                } 
                 return false;
             }
             $scope.hasNext = function() {
@@ -122,20 +127,25 @@ angular.module('starter.controllers', [])
         });
         $scope.addToPlaylist = function (data) {
             DAL.getQuestion(data.Id)
-            $ionicPopup.confirm({
-                title: 'Do You Want to Download  ' + data.Name,
-                template: 'Please check your credentials!',
-                okText: "Download"
-            }).then(function (res) {
-                if (res) {
-                    Questions.get(data.Id).then(res => {
-                        //localStorage.setItem('Questions', JSON.stringify(res.data));
-                        DAL.saveQuestion(res);
-                        $state.go('tab.home');
-                    });
-                }
-
+            Questions.get(data.Id).then(res => {
+                localStorage.setItem('Questions', JSON.stringify(res.data));
+                DAL.saveQuestion(res);
+                $state.go('tab.home');
             });
+            // $ionicPopup.confirm({
+            //     title: 'Do You Want to Download  ' + data.Name,
+            //     template: 'Please check your credentials!',
+            //     okText: "Download"
+            // }).then(function (res) {
+            //     if (res) {
+            //         Questions.get(data.Id).then(res => {
+            //             //localStorage.setItem('Questions', JSON.stringify(res.data));
+            //             DAL.saveQuestion(res);
+            //             $state.go('tab.home');
+            //         });
+            //     }
+
+            // });
         };
 
     })

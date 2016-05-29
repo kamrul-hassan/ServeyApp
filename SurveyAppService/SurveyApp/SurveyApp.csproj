@@ -129,6 +129,7 @@
     <Compile Include="Repository\SurveyQuestionRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
+    <Compile Include="Services\QuestionsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
