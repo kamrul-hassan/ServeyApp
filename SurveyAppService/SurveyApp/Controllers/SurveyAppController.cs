@@ -16,7 +16,7 @@ namespace SurveyApp.Controllers
             _gcmUserRepository = new UserRepository();
         }
         [HttpGet]
-        public IEnumerable<QuestionModel> Get()
+        public IEnumerable<QuestionModel> Get(int typeId)
         {
             var model = new List<QuestionModel>
                 {

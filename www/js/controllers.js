@@ -17,13 +17,13 @@ angular.module('starter.controllers', [])
     .controller('LoginCtrl', function($scope, $state, $ionicPopup, Login) {
         var currentUser = localStorage.getItem("CurrentUser");
         if (currentUser) {
-            $state.go('tab.home');
+            $state.go('tab.download');
         }
         $scope.login = function(userID) {
             Login.login(userID).then(res => {
                 if (res.data) {
                     localStorage.setItem("CurrentUser", JSON.stringify(res.data));
-                    $state.go('tab.home');
+                    $state.go('tab.download');
                 }
                 else {
                     $ionicPopup.alert({
@@ -121,7 +121,7 @@ angular.module('starter.controllers', [])
                 okText: "Download"
             }).then(function (res) {
                 if (res) {
-                    Questions.get().then(res => {
+                    Questions.get(data.Id).then(res => {
                         localStorage.setItem('Questions', JSON.stringify(res.data))                        
                         $state.go('tab.home');
                     });
