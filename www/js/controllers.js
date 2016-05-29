@@ -52,7 +52,8 @@ angular.module('starter.controllers', [])
       DAL.getQuestion(typeId, user.Id).then(function(res){
 
           $scope.showSaveButton = false;
-        var retrievedData = localStorage.getItem('Questions');
+        //var retrievedData = localStorage.getItem('Questions');
+        var retrievedData = res;
         $scope.serveyQuestions = JSON.parse(retrievedData);
         if (!$scope.serveyQuestions) {
             var myPopup = $ionicPopup.alert({
