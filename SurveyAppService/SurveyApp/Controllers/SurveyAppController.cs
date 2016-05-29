@@ -16,7 +16,7 @@ namespace SurveyApp.Controllers
             _gcmUserRepository = new UserRepository();
         }
         [HttpGet]
-        public IEnumerable<QuestionModel> Get()
+        public IEnumerable<QuestionModel> Get(int typeId)
         {
             var model = new List<QuestionModel>
                 {
@@ -24,6 +24,7 @@ namespace SurveyApp.Controllers
                         {
                             Type = "radio",
                             QuestionId = 1,
+                            TypeId = typeId,
                             Question = "Please select your department",
                             Options = new List<KeyValueModel>()
                                 {
@@ -38,6 +39,7 @@ namespace SurveyApp.Controllers
                     new QuestionModel()
                         {
                             Type = "radio",
+                            TypeId = typeId,
                             Question = "I receive the training I need to do my job well.",
                             QuestionId = 2,
                             Options = new List<KeyValueModel>()
@@ -54,6 +56,7 @@ namespace SurveyApp.Controllers
                     new QuestionModel()
                         {
                             Type = "checkbox",
+                            TypeId = typeId,
                             QuestionId = 3,
                             Question = "Please select your skills",
                             Options = new List<KeyValueModel>()
@@ -71,6 +74,7 @@ namespace SurveyApp.Controllers
                     new QuestionModel()
                         {
                             Type = "text",
+                            TypeId = typeId,
                             QuestionId = 4,
                             Question = "What I like best about working for the company is:"
                         }

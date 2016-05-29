@@ -2,25 +2,24 @@
     <ion-content class="padding top-padding">
         <h4>{{serveyQuestions[index].Question}}</h4>       
         <div class="list" ng-if="serveyQuestions[index].Type==='dropdown'">
-            <select ng-model="serveyQuestions[index].SelectedOption" ng-options="item.Value for item in serveyQuestions[index].Options">
+            <select ng-change="save()" ng-model="serveyQuestions[index].SelectedOption" ng-options="item.Value for item in serveyQuestions[index].Options">
             </select>
         </div>
         <div class="list" ng-if="serveyQuestions[index].Type==='radio'">
-            <ion-radio ng-repeat="item in serveyQuestions[index].Options" ng-value="item.Key" ng-model="serveyQuestions[index].SelectedOption">{{item.Value}}</ion-radio>
+            <ion-radio ng-change="save()" ng-repeat="item in serveyQuestions[index].Options" ng-value="item.Key" ng-model="serveyQuestions[index].SelectedOption">{{item.Value}}</ion-radio>
         </div>
         <div class="list" ng-if="serveyQuestions[index].Type==='text'">
             <label class="item item-input">
-                <input type="text" placeholder="Please enter your input here" ng-model="serveyQuestions[index].SelectedOption">
+                <input type="text" ng-change="save()" placeholder="Please enter your input here" ng-model="serveyQuestions[index].SelectedOption">
             </label>
         </div>
         <div class="list" ng-if="serveyQuestions[index].Type==='checkbox'">
-            <ion-checkbox ng-repeat="item in serveyQuestions[index].Options" ng-model="serveyQuestions[index].SelectedOption[item.Key]"
+            <ion-checkbox ng-change="save()" ng-repeat="item in serveyQuestions[index].Options" ng-model="serveyQuestions[index].SelectedOption[item.Key]"
                 ng-checked="serveyQuestions[index].SelectedOption[item.Key]">{{item.Value}}</ion-checkbox>
         </div>
         <div class="text-center padding">
             <button class="button button-positive" ng-if="hasPrevious()" ng-click="decreaseIndex()">Previous</button>
             <button class="button button-positive" ng-if="hasNext()" ng-disabled="serveyQuestions[index].SelectedOption == null" ng-click="increaseIndex()">Next</button>
-            <button class="button button-positive" ng-if="showSaveButton || isLastIndex()" ng-click="save()">Save</button>
 
         </div>
     </ion-content>

@@ -16,8 +16,8 @@ angular.module('starter.services', [])
 })
 .factory('Questions', function($http,config){    
     var services = {        
-        get: function() {           
-            return $http.get(`${config.serviceUrl}/SurveyApp/Get`);
+        get: function(id) {           
+            return $http.get(`${config.serviceUrl}/SurveyApp/Get?typeId=${id}`);
         },
         login: function(model){
             return $http.post(`${config.serviceUrl}/Login/Index`, model);
