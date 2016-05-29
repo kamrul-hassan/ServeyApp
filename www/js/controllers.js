@@ -36,17 +36,22 @@ angular.module('starter.controllers', [])
     })
 
     .controller('HomeCtrl', function($scope, $state, $ionicPopup, Questions, DAL) {
-        //console.log($cordovaNetwork.isOnline());
-      DAL.getQuestion().then(function(res){
 
-      }
-      );
 
         var currentUser = localStorage.getItem("CurrentUser");
         if(currentUser == null) {
             $state.go('login');
         }
-        $scope.showSaveButton = false;
+
+      var user=JSON.parse(currentUser);
+      var typeId = localStorage.getItem('SurveyTypeId');
+
+      if(!typeId){
+        $state.go('tab.download');
+      }
+      DAL.getQuestion(typeId, user.Id).then(function(res){
+
+          $scope.showSaveButton = false;
         var retrievedData = localStorage.getItem('Questions');
         $scope.serveyQuestions = JSON.parse(retrievedData);
         if (!$scope.serveyQuestions) {
@@ -74,7 +79,7 @@ angular.module('starter.controllers', [])
             $scope.isLastIndex = function() {
                 if ($scope.serveyQuestions.length - 1 == $scope.index){
                     return true;
-                } 
+                }
                 return false;
             }
             $scope.hasNext = function() {
@@ -85,14 +90,22 @@ angular.module('starter.controllers', [])
                 if ($scope.index == 0) return false;
                 return true;
             }
-            $scope.save = function() {
-                Questions.save($scope.serveyQuestions).then(res => {
-                    console.log(res);
-                    localStorage.setItem("SureveyAnswers", JSON.stringify($scope.serveyQuestions));
-                })
-            }
-        }
+          $scope.save = function() {
+            var serveyId=$scope.serveyQuestions[$scope.index].SurveyId;
 
+            if(!serveyId){
+              serveyId=0;
+            }
+
+            DAL.deleteServey(serveyId)
+              .then(function(res){
+                DAL.saveServey(typeId, user.Id, $scope.serveyQuestions).then(function(res){
+                  $scope.serveyQuestions[$scope.index].SurveyId=res;
+                })
+              });
+          }
+        }
+      });
     })
 
     .controller('ListCtrl', function($scope, $state, $ionicPopup, SurveyList) {
@@ -126,26 +139,20 @@ angular.module('starter.controllers', [])
             localStorage.setItem('SureveyType', JSON.stringify(res.data))
         });
         $scope.addToPlaylist = function (data) {
-            DAL.getQuestion(data.Id)
-            Questions.get(data.Id).then(res => {
-                localStorage.setItem('Questions', JSON.stringify(res.data));
-                DAL.saveQuestion(res);
-                $state.go('tab.home');
-            });
-            // $ionicPopup.confirm({
-            //     title: 'Do You Want to Download  ' + data.Name,
-            //     template: 'Please check your credentials!',
-            //     okText: "Download"
-            // }).then(function (res) {
-            //     if (res) {
-            //         Questions.get(data.Id).then(res => {
-            //             //localStorage.setItem('Questions', JSON.stringify(res.data));
-            //             DAL.saveQuestion(res);
-            //             $state.go('tab.home');
-            //         });
-            //     }
+          localStorage.setItem('SurveyTypeId', data.Id);
+          var user=JSON.parse(currentUser);
 
-            // });
+          DAL.getQuestion(data.Id, user.Id).then(function(result){
+            if(!result){
+              Questions.get(data.Id).then(res => {
+                //localStorage.setItem('Questions', JSON.stringify(res.data));
+                DAL.saveQuestion(data.Id, user.Id, res);
+
+            });
+            }
+            $state.go('tab.home');
+          });
+
         };
 
     })
