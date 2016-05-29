@@ -13,25 +13,34 @@ angular.module('starter.DalServices', [])
           }
 
           db.transaction(function (tx) {
-            tx.executeSql("CREATE TABLE IF NOT EXISTS Questions (TypeId integer, UserId integer,Question text)");
-            tx.executeSql("CREATE TABLE IF NOT EXISTS Servey (ServeyId INTEGER PRIMARY KEY AUTOINCREMENT, Servey text)");
+            tx.executeSql("CREATE TABLE IF NOT EXISTS Questions (TypeId integer, UserId integer, Question text)");
+            tx.executeSql("CREATE TABLE IF NOT EXISTS Servey (ServeyId INTEGER PRIMARY KEY AUTOINCREMENT, TypeId integer, UserId integer, Servey text)");
           });
 
         } catch (error) {
           alert(error);
         }
       },
-      saveServey: function(res){
-        try {
+      saveServey: function(typeId, userId, res){
 
-          db.transaction(function (tx) {
-            var query = "INSERT INTO Servey (Servey) VALUES (?)";
-            $cordovaSQLite.execute(db, query, [JSON.stringify(res.data)])
-          });
+            var query = "INSERT INTO Servey (TypeId, UserId, Servey) VALUES (?,?,?)";
+            return  $cordovaSQLite.execute(db, query, [typeId, userId, JSON.stringify(res.data)])
+              .then(function(res){
+                return res.insertId;
+            })
 
-        } catch (error) {
-          console.log(error);
-        }
+      },
+      deleteServey: function(Id){
+
+
+        var question=0;
+        var query = "delete from Servey Where ServeyId=?";
+        return $cordovaSQLite.execute(db, query, [Id])
+          .then(function(res) {
+              return question;
+            }
+          );
+
       },
       saveQuestion: function(typeId, userId,res){
         try {
