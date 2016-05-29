@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
             Login.login(userID).then(res => {
                 if (res.data) {
                     localStorage.setItem("CurrentUser", JSON.stringify(res.data));
-                    $state.go('tab.home');
+                    $state.go('tab.download');
                 }
                 else {
                     $ionicPopup.alert({
