@@ -38,7 +38,7 @@ namespace SurveyApp.Controllers
                         },
                     new QuestionModel()
                         {
-                            Type = "radio"
+                            Type = "radio",
                             TypeId = typeId,
                             Question = "I receive the training I need to do my job well.",
                             QuestionId = 2,

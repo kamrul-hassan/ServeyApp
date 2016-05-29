@@ -82,7 +82,8 @@ angular.module('starter.controllers', [])
             }
             $scope.save = function() {
                 Questions.save($scope.serveyQuestions).then(res => {
-                    console.log(res.data);
+                    console.log(res);
+                    localStorage.setItem("SureveyAnswers", JSON.stringify($scope.serveyQuestions));
                 })
             }
         }
@@ -120,14 +121,15 @@ angular.module('starter.controllers', [])
             localStorage.setItem('SureveyType', JSON.stringify(res.data))
         });
         $scope.addToPlaylist = function (data) {
+            DAL.getQuestion(data.Id)
             $ionicPopup.confirm({
                 title: 'Do You Want to Download  ' + data.Name,
                 template: 'Please check your credentials!',
                 okText: "Download"
             }).then(function (res) {
                 if (res) {
-                    Questions.get().then(res => {
-                        localStorage.setItem('Questions', JSON.stringify(res.data));
+                    Questions.get(data.Id).then(res => {
+                        //localStorage.setItem('Questions', JSON.stringify(res.data));
                         DAL.saveQuestion(res);
                         $state.go('tab.home');
                     });
