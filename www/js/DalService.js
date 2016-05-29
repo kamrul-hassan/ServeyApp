@@ -21,6 +21,18 @@ angular.module('starter.DalServices', [])
           alert(error);
         }
       },
+      saveServey: function(res){
+        try {
+
+          db.transaction(function (tx) {
+            var query = "INSERT INTO Servey (Servey) VALUES (?)";
+            $cordovaSQLite.execute(db, query, [JSON.stringify(res.data)])
+          });
+
+        } catch (error) {
+          console.log(error);
+        }
+      },
       saveQuestion: function(res){
         try {
 
