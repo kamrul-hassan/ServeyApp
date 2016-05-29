@@ -1,11 +1,31 @@
 <ion-view view-title="Choose Survey Name">
     <ion-content padding="true" class="ionic">
-        <div id = "surveyTypes">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr ng-repeat="item in items">
+                        <td>{{ item.Name }}</td>                        
+                        <td>8/{{item.Limit}}</td>
+                        <td style="text-align: center;"><button side="right" ng-click="addToPlaylist(item)" class="button button-balanced button-small">
+                            New
+                        </button></td>
+                    </tr>
+                    <tr ng-if="!(items && items.length > 0)">
+                        <td colspan="3">No record found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--<div id="surveyTypes">
             <ion-list>
-                <ion-item ng-repeat="item in items" ng-click="addToPlaylist(item)">
-                    {{item.Name}}
+                <ion-item ng-repeat="item in items" >
+                    {{item.Name}} &nbsp (8/{{item.Limit}})
+                        <button side="right" class="button button-balanced button-small">
+                            New
+                        </button>
+                     
                 </ion-item>
             </ion-list>
-        </div>
+        </div>-->
     </ion-content>
 </ion-view>

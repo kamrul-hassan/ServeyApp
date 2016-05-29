@@ -2,6 +2,7 @@
 using SurveyApp.Repository;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Linq;
 
 namespace SurveyApp.Controllers
 {
@@ -19,7 +20,7 @@ namespace SurveyApp.Controllers
         {            
             if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Password))
             {
-                return _users.Find(x => x.Email == model.Email && x.Password == model.Password);
+                return _users.FirstOrDefault(x => x.Email == model.Email && x.Password == model.Password);
                 //return new UserModel(){ Email = model.Email, Id = 1};
                 //return _userRepository.GetUser(model.Email, model.Password);                
             }
