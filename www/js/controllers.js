@@ -19,8 +19,8 @@ angular.module('starter.controllers', [])
         if (currentUser) {
             $state.go('tab.home');
         }
-        $scope.login = function(userID) {
-            Login.login(userID).then(res => {
+        $scope.login = function(user) {
+            Login.login(user).then(res => {
                 if (res.data) {
                     localStorage.setItem("CurrentUser", JSON.stringify(res.data));
                     $state.go('tab.download');
