@@ -8,11 +8,23 @@
 var db;
 angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.services', 'starter.DalServices'])
 
-.run(function($ionicPlatform, DAL) {
+.run(function($rootScope,$ionicPlatform, $ionicPopup, $state, DAL) {
   $ionicPlatform.ready(function() {
+    $rootScope.logOut = function(){
+          $ionicPopup.confirm({
+              title: 'Do You Want to Kill',
+              template: '',
+              okText: "Kill"
+          }).then(function (res) {
+              if (res) {
+                  localStorage.removeItem('CurrentUser');
+                  $state.go('login');
+              }
+
+          });
+      }
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-     DAL.prepareDB();
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
@@ -22,6 +34,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    DAL.prepareDB();
   });
 })
 .constant('config',{

@@ -1,26 +1,11 @@
 angular.module('starter.controllers', [])
-    .run(function($rootScope, $ionicPopup, $state) {
-        $rootScope.logOut = function(){
-            $ionicPopup.confirm({
-                title: 'Do You Want to Kill',
-                template: '',
-                okText: "Kill"
-            }).then(function (res) {
-                if (res) {
-                   localStorage.removeItem('CurrentUser');
-                   $state.go('login');
-                }
-
-            });
-        }
-    })
     .controller('LoginCtrl', function($scope, $state, $ionicPopup, Login) {
         var currentUser = localStorage.getItem("CurrentUser");
         if (currentUser) {
             $state.go('tab.home');
         }
         $scope.login = function(user) {
-            Login.login(user).then(res => {
+            Login.login(user).then(function(res) {                
                 if (res.data) {
                     localStorage.setItem("CurrentUser", JSON.stringify(res.data));
                     $state.go('tab.download');
@@ -36,8 +21,6 @@ angular.module('starter.controllers', [])
     })
 
     .controller('HomeCtrl', function($scope, $state, $ionicPopup, Questions, DAL) {
-
-
         var currentUser = localStorage.getItem("CurrentUser");
         if(currentUser == null) {
             $state.go('login');
@@ -46,21 +29,21 @@ angular.module('starter.controllers', [])
       var user=JSON.parse(currentUser);
       var typeId = localStorage.getItem('SurveyTypeId');
 
-      if(!typeId){
+      if(!typeId){       
         $state.go('tab.download');
       }
+      else{
+          typeId = parseInt(typeId);
+      }
       DAL.getQuestion(typeId, user.Id).then(function(res){
-
-          $scope.showSaveButton = false;
-        //var retrievedData = localStorage.getItem('Questions');
-        var retrievedData = res;
-        $scope.serveyQuestions = JSON.parse(retrievedData);
+        $scope.showSaveButton = false;        
+        $scope.serveyQuestions = JSON.parse(res);
         if (!$scope.serveyQuestions) {
             var myPopup = $ionicPopup.alert({
                 title: 'Survey Download',
                 template: 'Please download your servey!'
             });
-            myPopup.then(function(res) {
+            myPopup.then(function(res) {               
                 $state.go('tab.download');
             });
         }
@@ -118,7 +101,7 @@ angular.module('starter.controllers', [])
         $scope.isServerChange = function() {
             if($scope.isServer.checked)
             {
-                SurveyList.get().then(res => {
+                SurveyList.get().then(function(res) {
                     $scope.surveyList = res.data;
                 });
             }
@@ -135,7 +118,7 @@ angular.module('starter.controllers', [])
         if(currentUser == null) {
             $state.go('login')
         }
-        Questions.getSureveyType().then(res => {
+        Questions.getSureveyType().then(function(res) {
             $scope.items = res.data;
             localStorage.setItem('SureveyType', JSON.stringify(res.data))
         });
@@ -143,15 +126,20 @@ angular.module('starter.controllers', [])
           localStorage.setItem('SurveyTypeId', data.Id);
           var user=JSON.parse(currentUser);
 
-          DAL.getQuestion(data.Id, user.Id).then(function(result){
-            if(!result){
-              Questions.get(data.Id).then(res => {
-                //localStorage.setItem('Questions', JSON.stringify(res.data));
-                DAL.saveQuestion(data.Id, user.Id, res);
-
-            });
-            }
-            $state.go('tab.home');
+          DAL.getQuestion(data.Id, user.Id).then(function (result) {
+              if (!result) {
+                  Questions.get(data.Id).then(
+                      function (res) {
+                          DAL.saveQuestion(data.Id, user.Id, res);
+                          $state.go('tab.home'); 
+                      },
+                      function(data) {
+                        // Handle error here
+                    });
+              }
+              else{
+                 $state.go('tab.home'); 
+              }              
           });
 
         };

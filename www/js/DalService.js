@@ -54,20 +54,20 @@ angular.module('starter.DalServices', [])
           alert(error);
         }
       },
-      getQuestion: function(typeId, userId){
-        var questionList=null;
-
+      getQuestion: function(typeId, userId){        
         var query = "Select * from Questions where TypeId=? and UserId=?";
-
         return $cordovaSQLite.execute(db, query, [typeId, userId])
           .then(function(res) {
 
               if (res.rows.length > 0) {
-                questionList = res.rows.item(0).Question;
+                return res.rows.item(0).Question;
               }
-              return questionList;
-            }
-          );
+              return null;
+            },
+            function (err) {
+              console.error(err);
+              return null;
+            });
       },
       getServeyById: function(id){
         var question=null;
