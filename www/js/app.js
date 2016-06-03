@@ -37,8 +37,8 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
     DAL.prepareDB();
   });
 })
-.constant('config',{
-    serviceUrl : 'https://primaryintelligence.imshealth.com/surveyservice/api' //'http://localhost:29983/api'
+.constant('config',{    
+    serviceUrl : 'http://custemea3.imshealth.com/surveyservice/api/' //'http://localhost:29983/api'
 })
 .config(function($stateProvider, $urlRouterProvider) {
 
