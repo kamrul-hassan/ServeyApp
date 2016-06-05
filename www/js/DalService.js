@@ -5,8 +5,11 @@ angular.module('starter.DalServices', [])
     var services={
       prepareDB: function(){
         try {
-          if(window.cordova) {
+          if(ionic.Platform.isAndroid()) {
             db = $cordovaSQLite.openDB({name:"serveyDB.db",location:'default'});
+          }
+          else if(ionic.Platform.isIOS()) {
+            db = $cordovaSQLite.openDB({name:"serveyDB.db",iosDatabaseLocation:'default'});
           }
           else {
             db = openDatabase("serveyDB.db", '1.0', "My WebSQL Database", 2 * 1024 * 1024);
