@@ -10,12 +10,12 @@ angular.module('starter.DalServices', [])
           }
           else {
             db = openDatabase("serveyDB.db", '1.0', "My WebSQL Database", 2 * 1024 * 1024);
-          }
+        }
 
-          db.transaction(function (tx) {
-            tx.executeSql("CREATE TABLE IF NOT EXISTS Questions (TypeId integer, UserId integer, Question text)");
-            tx.executeSql("CREATE TABLE IF NOT EXISTS Servey (ServeyId INTEGER PRIMARY KEY AUTOINCREMENT, TypeId integer, UserId integer, Servey text)");
-          });
+        db.transaction(function (tx) {
+          tx.executeSql("CREATE TABLE IF NOT EXISTS Questions (TypeId integer, UserId integer, Question text)");
+          tx.executeSql("CREATE TABLE IF NOT EXISTS Servey (ServeyId INTEGER PRIMARY KEY AUTOINCREMENT, TypeId integer, UserId integer, Servey text)");
+        });
 
         } catch (error) {
           alert(error);
@@ -44,17 +44,14 @@ angular.module('starter.DalServices', [])
       },
       saveQuestion: function(typeId, userId,res){
         try {
-
-          db.transaction(function (tx) {
             var query = "INSERT INTO Questions (TypeId, UserId, Question) VALUES (?,?,?)";
-            $cordovaSQLite.execute(db, query, [typeId, userId,JSON.stringify(res.data)])
-          });
+            return $cordovaSQLite.execute(db, query, [typeId, userId,JSON.stringify(res.data)])
 
         } catch (error) {
           alert(error);
         }
       },
-      getQuestion: function(typeId, userId){        
+      getQuestion: function(typeId, userId){
         var query = "Select * from Questions where TypeId=? and UserId=?";
         return $cordovaSQLite.execute(db, query, [typeId, userId])
           .then(function(res) {

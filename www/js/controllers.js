@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
             $state.go('tab.home');
         }
         $scope.login = function(user) {
-            Login.login(user).then(function(res) {                
+            Login.login(user).then(function(res) {
                 if (res.data) {
                     localStorage.setItem("CurrentUser", JSON.stringify(res.data));
                     $state.go('tab.download');
@@ -29,21 +29,21 @@ angular.module('starter.controllers', [])
       var user=JSON.parse(currentUser);
       var typeId = localStorage.getItem('SurveyTypeId');
 
-      if(!typeId){       
+      if(!typeId){
         $state.go('tab.download');
       }
       else{
           typeId = parseInt(typeId);
       }
       DAL.getQuestion(typeId, user.Id).then(function(res){
-        $scope.showSaveButton = false;        
+        $scope.showSaveButton = false;
         $scope.serveyQuestions = JSON.parse(res);
         if (!$scope.serveyQuestions) {
             var myPopup = $ionicPopup.alert({
                 title: 'Survey Download',
                 template: 'Please download your servey!'
             });
-            myPopup.then(function(res) {               
+            myPopup.then(function(res) {
                 $state.go('tab.download');
             });
         }
@@ -130,16 +130,22 @@ angular.module('starter.controllers', [])
               if (!result) {
                   Questions.get(data.Id).then(
                       function (res) {
-                          DAL.saveQuestion(data.Id, user.Id, res);
-                          $state.go('tab.home'); 
+                          DAL.saveQuestion(data.Id, user.Id, res)
+                            .then(
+                              function(result){
+                                $state.go('tab.home');
+                            },
+                              function(error){
+                                alert('Error saving Questions to local!');
+                            });
                       },
-                      function(data) {
-                        // Handle error here
+                      function(error) {
+                        alert(error.statusText);
                     });
               }
               else{
-                 $state.go('tab.home'); 
-              }              
+                 $state.go('tab.home');
+              }
           });
 
         };
