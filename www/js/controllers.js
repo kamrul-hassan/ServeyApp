@@ -26,16 +26,16 @@ angular.module('starter.controllers', [])
             $state.go('login');
         }
 
-      var user=JSON.parse(currentUser);
-      var typeId = localStorage.getItem('SurveyTypeId');
-
-      if(!typeId){
+      var user = JSON.parse(currentUser);
+      var SurveyType = localStorage.getItem('SelectedSurveyType');
+      var type = {};
+      if(SurveyType == null || !user.Id){
         $state.go('tab.download');
       }
       else{
-          typeId = parseInt(typeId);
+          var type = JSON.parse(SurveyType);          
       }
-      DAL.getQuestion(typeId, user.Id).then(function(res){
+      DAL.getQuestion(type.Id, user.Id).then(function(res){
         $scope.showSaveButton = false;
         $scope.serveyQuestions = JSON.parse(res);
         if (!$scope.serveyQuestions) {
@@ -49,11 +49,12 @@ angular.module('starter.controllers', [])
         }
         else {
             $scope.index = 0;
+            $scope.surveyId = 0;
             $scope.increaseIndex = function() {
                 $scope.index = $scope.index + 1;
             }
             $scope.completeIndex = function() {
-                $scope.index = $scope.index + 1;
+                DAL.completeSurvey($scope.surveyId);                
                 $state.go('tab.list');
             }
             $scope.decreaseIndex = function() {
@@ -74,30 +75,47 @@ angular.module('starter.controllers', [])
                 if ($scope.index == 0) return false;
                 return true;
             }
-          $scope.save = function() {
-            var serveyId=$scope.serveyQuestions[$scope.index].SurveyId;
-
-            if(!serveyId){
-              serveyId=0;
+          $scope.save = function() {  
+            if($scope.surveyId > 0)
+            {
+                DAL.updateSurvey($scope.surveyId, type.Id, type.Name, user.Id, 0, $scope.serveyQuestions);
             }
-
-            DAL.deleteServey(serveyId)
-              .then(function(res){
-                DAL.saveServey(typeId, user.Id, $scope.serveyQuestions).then(function(res){
-                  $scope.serveyQuestions[$scope.index].SurveyId=res;
-                })
-              });
+            else{
+                DAL.saveServey(type.Id, type.Name, user.Id, 0,$scope.serveyQuestions).then(function(res){
+                   $scope.surveyId = res;
+                 })
+            }
+                      
+            // DAL.deleteServey(serveyId)
+            //   .then(function(res){
+            //     DAL.saveServey(typeId, user.Id, 0,$scope.serveyQuestions).then(function(res){
+            //       $scope.surveyId = res;
+            //     })
+            //   });
           }
         }
       });
     })
 
-    .controller('ListCtrl', function($scope, $state, $ionicPopup, SurveyList) {
+    .controller('ListCtrl', function($scope, $state, $ionicPopup, SurveyList, DAL) {
         var currentUser = localStorage.getItem("CurrentUser");
-        if(currentUser == null) {
+        if (currentUser == null) {
             $state.go('login')
         }
+        var user = JSON.parse(currentUser);
+        var surveyType = localStorage.getItem('SelectedSurveyType');
+        var type
+        if (surveyType == null || !user.Id) {
+            $state.go('tab.download');
+        }
+        else {
+            type = JSON.parse(surveyType);
+        }
         $scope.isServer = { checked: false };
+        //$scope.surveyList = DAL.getSurveyIdTypeId(typeId, user.Id);
+        DAL.getSurveyList(type.Id, user.Id).then(function (res) {
+            $scope.surveyList = res;
+        });
         $scope.isServerChange = function() {
             if($scope.isServer.checked)
             {
@@ -106,7 +124,9 @@ angular.module('starter.controllers', [])
                 });
             }
             else{
-                $scope.surveyList = [];
+               DAL.getSurveyList(type.Id, user.Id).then(function(res) {
+                    $scope.surveyList = res;
+                });
             }
         };
         $scope.editSurvey = function (id) {
@@ -123,7 +143,7 @@ angular.module('starter.controllers', [])
             localStorage.setItem('SureveyType', JSON.stringify(res.data))
         });
         $scope.addToPlaylist = function (data) {
-          localStorage.setItem('SurveyTypeId', data.Id);
+          localStorage.setItem('SelectedSurveyType', JSON.stringify(data));
           var user=JSON.parse(currentUser);
 
           DAL.getQuestion(data.Id, user.Id).then(function (result) {
