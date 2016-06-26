@@ -22,7 +22,7 @@ namespace SurveyApp.Repository
         {
             using (_dbContext = new AppDbContext())
             {
-                return _dbContext.Users.Where(x=>x.Email == email && x.Password == password).Select(x=> new UserModel() { Id = x.Id, RegistrationId = x.RegistrationId, Email = x.Email, CreatedOn = x.CreatedOn }).FirstOrDefault();
+                return _dbContext.Users.Where(x=>x.Email.ToLower() == email.ToLower() && x.Password == password).Select(x=> new UserModel() { Id = x.Id, RegistrationId = x.RegistrationId, Email = x.Email, CreatedOn = x.CreatedOn }).FirstOrDefault();
             }
         }
 

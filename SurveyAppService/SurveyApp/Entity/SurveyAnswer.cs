@@ -6,14 +6,14 @@ using System.Web;
 
 namespace SurveyApp.Entity
 {
-    public class QuestionAnswer
+    public class SurveyAnswer
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public int QuestionId { get; set; }   
-        public int? QuestionOptionId { get; set; }
+        public int Id { get; set; }        
+        public int QuestionId { get; set; }
+        public string QuestionOptionIds { get; set; }        
         public string Answer { get; set; }
+        public bool IsActive { get; set; }
         public virtual Question Question { get; set; }
-        public virtual QuestionOption QuestionOption { get; set; }
     }
 }

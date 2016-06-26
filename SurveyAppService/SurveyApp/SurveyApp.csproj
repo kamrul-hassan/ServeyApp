@@ -18,7 +18,7 @@
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -105,21 +105,26 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SurveyAppController.cs" />
     <Compile Include="Entity\AppDbContext.cs" />
+    <Compile Include="Entity\QuestionMapping.cs" />
+    <Compile Include="Entity\SurveyAnswer.cs" />
+    <Compile Include="Entity\SurveyType.cs" />
     <Compile Include="Entity\User.cs" />
-    <Compile Include="Entity\QuestionAnswer.cs" />
+    <Compile Include="Entity\Survey.cs" />
     <Compile Include="Entity\QuestionOption.cs" />
     <Compile Include="Entity\Question.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\LogWriter.cs" />
-    <Compile Include="Migrations\201604071116483_AddTables.cs" />
-    <Compile Include="Migrations\201604071116483_AddTables.Designer.cs">
-      <DependentUpon>201604071116483_AddTables.cs</DependentUpon>
+    <Compile Include="Migrations\201606230746302_CreateTables.cs" />
+    <Compile Include="Migrations\201606230746302_CreateTables.Designer.cs">
+      <DependentUpon>201606230746302_CreateTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\SelectedItemModel.cs" />
+    <Compile Include="Models\SurveyModel.cs" />
     <Compile Include="Models\SurveyState.cs" />
-    <Compile Include="Models\SurveyType.cs" />
+    <Compile Include="Models\SurveyTypeModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\KeyValueModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -143,8 +148,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604071116483_AddTables.resx">
-      <DependentUpon>201604071116483_AddTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606230746302_CreateTables.resx">
+      <DependentUpon>201606230746302_CreateTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -20,9 +20,9 @@ namespace SurveyApp.Controllers
         {            
             if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Password))
             {
-                return _users.FirstOrDefault(x => x.Email == model.Email && x.Password == model.Password);
+                //return _users.FirstOrDefault(x => x.Email == model.Email && x.Password == model.Password);
                 //return new UserModel(){ Email = model.Email, Id = 1};
-                //return _userRepository.GetUser(model.Email, model.Password);                
+                return _userRepository.GetUser(model.Email, model.Password);                
             }
             return null;
         }

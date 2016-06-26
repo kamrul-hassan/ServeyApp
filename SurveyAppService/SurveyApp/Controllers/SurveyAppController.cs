@@ -12,20 +12,23 @@ namespace SurveyApp.Controllers
     public class SurveyAppController : ApiController
     {
         private readonly IUserRepository _gcmUserRepository;
+        private readonly ISurveyQuestionRepository _surveyQuestionRepository;
 
         public SurveyAppController() {
             _gcmUserRepository = new UserRepository();
+            _surveyQuestionRepository = new SurveyQuestionRepository();
         }
         [HttpGet]
         public IEnumerable<QuestionModel> Get(int typeId)
         {
-            return QuestionsService.QuestionSets.Where(x => x.TypeId == typeId).ToList();
+            //return QuestionsService.QuestionSets.Where(x => x.TypeId == typeId).ToList();
+            return _surveyQuestionRepository.GetQuestions(typeId);
         }
 
         [HttpPost]
-        public bool Save(List<QuestionModel> model)
+        public bool Save(List<SurveyModel> model)
         {
-            return true;
+            return _surveyQuestionRepository.SaveSurvey(model);
         }
 
         [HttpPost]
@@ -41,30 +44,32 @@ namespace SurveyApp.Controllers
             return true;
         }
         [HttpGet]
-        public List<SurveyState> GetSurveyList()
+        public List<SurveyState> GetSurveyList(int userId, int typeId)
         {
-            return new List<SurveyState>()
-            {
-                new SurveyState() {Id = 1, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
-                new SurveyState() {Id = 2, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
-                new SurveyState() {Id = 3, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
-                new SurveyState() {Id = 4, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
-                new SurveyState() {Id = 5, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
-                new SurveyState() {Id = 6, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true}
+            return _surveyQuestionRepository.GetSurveys(userId, typeId);
+            //return new List<SurveyState>()
+            //{
+            //    new SurveyState() {Id = 1, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
+            //    new SurveyState() {Id = 2, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
+            //    new SurveyState() {Id = 3, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
+            //    new SurveyState() {Id = 4, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
+            //    new SurveyState() {Id = 5, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true},
+            //    new SurveyState() {Id = 6, Status = "Completed", Name= "Survey Name 1", Location = "Server", IsSynchronized = true}
 
-            };
+            //};
         }
 
         [HttpGet]
-        public List<SurveyType> GetSurveyTypes()
+        public List<SurveyTypeModel> GetSurveyTypes()
         {
-            return new List<SurveyType>()
-            {
-                new SurveyType() {Id = 1, Name = "Survey Name 1", Limit = 100 },
-                new SurveyType() {Id = 2, Name = "Survey Name 2", Limit = 80},
-                new SurveyType() {Id = 3, Name = "Survey Name 3", Limit = 100 }
+            return _surveyQuestionRepository.GetSurveyTypes();
+            //return new List<SurveyTypeModel>()
+            //{
+            //    new SurveyTypeModel() {Id = 1, Name = "Survey Name 1", Limit = 100 },
+            //    new SurveyTypeModel() {Id = 2, Name = "Survey Name 2", Limit = 80},
+            //    new SurveyTypeModel() {Id = 3, Name = "Survey Name 3", Limit = 100 }
 
-            };
+            //};
         }
     }
 }
